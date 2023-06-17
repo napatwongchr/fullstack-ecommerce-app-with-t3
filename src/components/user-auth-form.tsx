@@ -13,8 +13,6 @@ const { useState } = React;
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const session = useSession();
-
-  console.log(session);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [email, setEmail] = useState("");
 
