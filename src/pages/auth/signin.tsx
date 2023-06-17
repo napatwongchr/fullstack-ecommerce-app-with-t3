@@ -2,10 +2,11 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Command } from "lucide-react";
-
+import { type GetServerSideProps } from "next";
 import { cn } from "~/lib/utils";
 import { buttonVariants } from "~/components/ui/button";
 import { UserAuthForm } from "~/components/user-auth-form";
+import { getServerAuthSession } from "~/server/auth";
 
 export const metadata: Metadata = {
   title: "Sign In",
@@ -95,3 +96,20 @@ export default function AuthenticationPage() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getServerAuthSession(ctx);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: `/`,
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
