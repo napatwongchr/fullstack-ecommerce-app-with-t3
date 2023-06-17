@@ -19,7 +19,7 @@ const config = {
     defaultLocale: "en",
   },
   images: {
-    domains: ["picsum.photos"],
+    domains: ["picsum.photos", "res.cloudinary.com"],
   },
 };
 export default config;
