@@ -1,5 +1,6 @@
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { PrismaClient } from "@prisma/client";
+import { z } from "zod";
 
 const prisma = new PrismaClient();
 // TODO #1: Create tRPC router
@@ -20,4 +21,24 @@ export const productRouter = createTRPCRouter({
     });
     return flashSaleProducts;
   }),
+
+  createProductCategory: protectedProcedure
+    .input(
+      z.object({
+        name: z.string(),
+        image: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      try {
+        await prisma.category.create({
+          data: {
+            name: input.name,
+            image: input.image,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }),
 });
