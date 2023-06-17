@@ -1,3 +1,5 @@
+import { getServerAuthSession } from "../server/auth";
+import { type GetServerSideProps } from "next";
 import { FlashSaleItems } from "~/components/flash-sale-items";
 import { MainNav } from "~/components/main-nav";
 import { ProductCategories } from "~/components/product-categories";
@@ -24,3 +26,20 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getServerAuthSession(ctx);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: `/auth/signin`,
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
+};
