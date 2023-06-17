@@ -5,19 +5,31 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Icons } from "~/components/ui/icons";
+import { signIn, useSession } from "next-auth/react";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
+const { useState } = React;
+
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const session = useSession();
+
+  console.log(session);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [email, setEmail] = useState("");
 
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
     setIsLoading(true);
-
-    setTimeout(() => {
+    try {
+      await signIn("email", {
+        redirect: false,
+        email,
+      });
       setIsLoading(false);
-    }, 3000);
+    } catch {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -36,6 +48,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               autoComplete="email"
               autoCorrect="off"
               disabled={isLoading}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <Button disabled={isLoading}>

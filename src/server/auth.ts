@@ -7,6 +7,8 @@ import {
 import DiscordProvider from "next-auth/providers/discord";
 import EmailProvider from "next-auth/providers/email";
 import { env } from "~/env.mjs";
+import { MongoDBAdapter } from "@auth/mongodb-adapter";
+import clientPromise from "~/lib/mongodb";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -36,13 +38,18 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, token }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: token.sub,
-      },
-    }),
+    session: (data) => {
+      const { session } = data;
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          name: session.user.name ?? null,
+          image: session.user.image ?? null,
+          id: data.user.id,
+        },
+      };
+    },
   },
   providers: [
     DiscordProvider({
@@ -71,6 +78,13 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
+  adapter: MongoDBAdapter(clientPromise),
+  pages: {
+    signIn: "/",
+    signOut: "/",
+    error: "/",
+    verifyRequest: "/",
+  },
 };
 
 /**
