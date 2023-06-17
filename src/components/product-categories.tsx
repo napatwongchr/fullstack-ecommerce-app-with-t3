@@ -1,7 +1,6 @@
 import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 import { Separator } from "~/components/ui/separator";
 
-import { flashSaleProducts as mockCategories } from "~/data/products";
 import { cn } from "~/lib/utils";
 import Image from "next/image";
 import { api } from "~/utils/api";

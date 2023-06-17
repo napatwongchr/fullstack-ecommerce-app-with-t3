@@ -11,4 +11,13 @@ export const productRouter = createTRPCRouter({
     const categories = await prisma.category.findMany();
     return categories;
   }),
+
+  getFlashSales: protectedProcedure.query(async () => {
+    const flashSaleProducts = await prisma.product.findMany({
+      where: {
+        isFlashSale: true,
+      },
+    });
+    return flashSaleProducts;
+  }),
 });
