@@ -6,7 +6,8 @@ export const flashSaleProducts = [
       "Enjoy high-quality audio with these premium Bluetooth headphones. They feature noise cancellation technology and a long battery life.",
     price: 99.99,
     numberOfSold: 500,
-    image: "https://picsum.photos/id/239/450",
+    image:
+      "https://res.cloudinary.com/techupth/image/upload/v1686988245/fullstack-ecommerce-app/products/smart-watch_zvu0hn.jpg",
     ratings: {
       average: 4.5,
       total: 200,

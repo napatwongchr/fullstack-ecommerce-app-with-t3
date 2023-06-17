@@ -10,22 +10,53 @@ const seed = async () => {
 
     // Seed categories
     const mockCategories = [
-      { name: "Electronics" },
-      { name: "Clothing" },
-      { name: "Home Decor" },
-      { name: "Beauty" },
-      { name: "Books" },
-      { name: "Sports" },
+      {
+        name: "Electronics",
+        image:
+          "https://res.cloudinary.com/techupth/image/upload/v1686989078/fullstack-ecommerce-app/categories/electronics_byufpk.jpg",
+      },
+      {
+        name: "Clothing",
+        image:
+          "https://res.cloudinary.com/techupth/image/upload/v1686989078/fullstack-ecommerce-app/categories/clothes_v112ua.jpg",
+      },
+      {
+        name: "Home Decor",
+        image:
+          "https://res.cloudinary.com/techupth/image/upload/v1686989078/fullstack-ecommerce-app/categories/home-decor_zmmiwl.jpg",
+      },
+      {
+        name: "Beauty",
+        image:
+          "https://res.cloudinary.com/techupth/image/upload/v1686989078/fullstack-ecommerce-app/categories/beauty_fwxehg.jpg",
+      },
+      {
+        name: "Books",
+        image:
+          "https://res.cloudinary.com/techupth/image/upload/v1686989079/fullstack-ecommerce-app/categories/books_rcxu3j.jpg",
+      },
+      {
+        name: "Sports",
+        image:
+          "https://res.cloudinary.com/techupth/image/upload/v1686989078/fullstack-ecommerce-app/categories/sport_pf1tgm.jpg",
+      },
     ];
 
-    const seededCategories = await prisma.category.createMany({
-      data: mockCategories,
-      skipDuplicates: true,
-    });
+    // const seededCategories = await prisma.category.createMany({
+    //   data: mockCategories,
+    // });
+
+    await Promise.all(
+      mockCategories.map(async (category) => {
+        await prisma.category.create({
+          data: category,
+        });
+      })
+    );
 
     const categories = await prisma.category.findMany();
 
-    console.log(`Seeded ${seededCategories.count} categories.`);
+    console.log(`Seeded categories.`);
 
     // Seed products
     const products = [
@@ -34,7 +65,8 @@ const seed = async () => {
         description: "Experience immersive sound with our wireless headphones.",
         price: 99.99,
         sold: 10,
-        image: "headphones.jpg",
+        image:
+          "https://res.cloudinary.com/techupth/image/upload/v1686988245/fullstack-ecommerce-app/products/wireless-headphone_odbynd.jpg",
         isFlashSale: false,
         categoryId: categories?.[0]?.id ?? "1",
       },
@@ -44,7 +76,8 @@ const seed = async () => {
           "Our denim jeans offer comfort and style for any occasion.",
         price: 59.99,
         sold: 5,
-        image: "jeans.jpg",
+        image:
+          "https://res.cloudinary.com/techupth/image/upload/v1686988246/fullstack-ecommerce-app/products/denim-jeans_ez2wgd.jpg",
         isFlashSale: true,
         categoryId: categories?.[1]?.id ?? "2",
       },
@@ -54,7 +87,8 @@ const seed = async () => {
           "Add a touch of elegance to your living space with our decorative throw pillow.",
         price: 19.99,
         sold: 8,
-        image: "pillow.jpg",
+        image:
+          "https://res.cloudinary.com/techupth/image/upload/v1686988245/fullstack-ecommerce-app/products/pillow_zor0y6.jpg",
         isFlashSale: false,
         categoryId: categories?.[2]?.id ?? "3",
       },
@@ -64,7 +98,8 @@ const seed = async () => {
           "Get the perfect pout with our long-lasting lipstick set in various shades.",
         price: 29.99,
         sold: 12,
-        image: "lipstick.jpg",
+        image:
+          "https://res.cloudinary.com/techupth/image/upload/v1686988246/fullstack-ecommerce-app/products/lipstick-set_jxkaaq.jpg",
         isFlashSale: true,
         categoryId: categories?.[3]?.id ?? "4",
       },
@@ -73,7 +108,8 @@ const seed = async () => {
         description: "Stay connected with our advanced smartwatch.",
         price: 149.99,
         sold: 3,
-        image: "smartwatch.jpg",
+        image:
+          "https://res.cloudinary.com/techupth/image/upload/v1686988245/fullstack-ecommerce-app/products/smart-watch_zvu0hn.jpg",
         isFlashSale: true,
         categoryId: categories?.[0]?.id ?? "1",
       },
@@ -82,7 +118,8 @@ const seed = async () => {
         description: "Make a statement with our trendy graphic t-shirt.",
         price: 24.99,
         sold: 7,
-        image: "tshirt.jpg",
+        image:
+          "https://res.cloudinary.com/techupth/image/upload/v1686988245/fullstack-ecommerce-app/products/graphic-tshirt_rrjvfp.jpg",
         isFlashSale: false,
         categoryId: categories?.[1]?.id ?? "2",
       },
@@ -91,7 +128,8 @@ const seed = async () => {
         description: "Enhance your home decor with our stylish wall clock.",
         price: 39.99,
         sold: 2,
-        image: "wallclock.jpg",
+        image:
+          "https://res.cloudinary.com/techupth/image/upload/v1686988245/fullstack-ecommerce-app/products/wall-clock_jpimji.jpg",
         isFlashSale: false,
         categoryId: categories?.[2]?.id ?? "3",
       },
@@ -100,7 +138,8 @@ const seed = async () => {
         description: "Get voluminous lashes with our high-quality mascara.",
         price: 14.99,
         sold: 9,
-        image: "mascara.jpg",
+        image:
+          "https://res.cloudinary.com/techupth/image/upload/v1686988245/fullstack-ecommerce-app/products/mascara_gnomzj.jpg",
         isFlashSale: false,
         categoryId: categories?.[3]?.id ?? "4",
       },

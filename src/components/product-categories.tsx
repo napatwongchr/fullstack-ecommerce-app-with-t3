@@ -1,12 +1,16 @@
 import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 import { Separator } from "~/components/ui/separator";
 
-import { flashSaleProducts } from "~/data/products";
+import { flashSaleProducts as mockCategories } from "~/data/products";
 import { cn } from "~/lib/utils";
 import Image from "next/image";
 
+// TODO #5: Import api and making a request to get categories
+// TODO #6: Render categories
+
 export function ProductCategories() {
   const aspectRatio = "portrait";
+
   return (
     <div className="space-y-4">
       <div className="space-y-1">
@@ -21,35 +25,28 @@ export function ProductCategories() {
       <div className="relative">
         <ScrollArea>
           <div className="flex space-x-4 pb-4">
-            {flashSaleProducts.map((product, index) => {
+            {mockCategories.map((category, index) => {
               return (
-                <div key={index} className="w-[250px] space-y-3">
+                <div key={index} className="relative w-[250px] space-y-3">
                   <Image
-                    src={product.image}
-                    alt={product.name}
+                    src={category.image}
+                    alt={category.name}
                     width={250}
                     height={250}
                     className={cn(
-                      "h-auto w-auto rounded-xl object-cover transition-all hover:scale-105",
+                      "h-auto w-auto rounded-xl object-cover opacity-40 transition-all hover:scale-105",
                       aspectRatio === "portrait"
                         ? "aspect-[3/4]"
                         : "aspect-square"
                     )}
                   />
-                  <div className="space-y-1 text-sm">
-                    <h3 className="font-medium leading-none">{product.name}</h3>
-                    <p className="truncate text-xs text-muted-foreground">
-                      {product.description}
-                    </p>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <h4 className="font-medium leading-none">
-                      {product.price} ฿
-                    </h4>
-                    <p className="truncate text-xs text-muted-foreground">
-                      50k Sold
-                    </p>
-                  </div>
+                  <h2
+                    className={cn(
+                      "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-sm bg-gradient-to-b from-red-200 to-gray-100 p-2 text-lg font-bold uppercase"
+                    )}
+                  >
+                    Category
+                  </h2>
                 </div>
               );
             })}
