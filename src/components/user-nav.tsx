@@ -1,5 +1,6 @@
 import { CreditCard, LogOut, PlusCircle, Settings, User } from "lucide-react";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
@@ -15,6 +16,7 @@ import {
 } from "~/components/ui/dropdown-menu";
 
 export function UserNav() {
+  const router = useRouter();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -51,9 +53,12 @@ export function UserNav() {
             <span>Settings</span>
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => router.push("/admin")}
+          >
             <PlusCircle className="mr-2 h-4 w-4" />
-            <span>New Team</span>
+            <span>Admin</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
